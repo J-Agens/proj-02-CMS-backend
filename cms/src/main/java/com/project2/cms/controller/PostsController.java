@@ -102,7 +102,6 @@ public class PostsController {
     	        && (Boolean) session.getAttribute("isLoggedIn")) {
     		
 Posts post = postRepository.findById(postId)
-    			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 Integer key = post.getAuthor(); 
 if((Integer)session.getAttribute("writerpermission") == 2
 		||
@@ -148,8 +147,12 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-    					java.util.Date myDate = new Date();
-    					java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+    					
+    					long time = System.currentTimeMillis();
+    					java.sql.Date sqlDate = new java.sql.Date(time);
+    					
+//    					java.util.Date  = new Date();
+//    					java.sql.Date  = new java.sql.Date(myDate.getTime());
 
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(1);
@@ -174,9 +177,9 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-						java.util.Date myDate = new Date();
-    					java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-
+    					long time = System.currentTimeMillis();
+    					java.sql.Date sqlDate = new java.sql.Date(time);
+    					
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(0);
     			    	   post.setDatePublished(sqlDate);
