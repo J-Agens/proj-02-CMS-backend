@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.project2.cms.model.Posts;
-import com.project2.cms.model.Writer;
 import com.project2.cms.repository.PostsRepository;
 import com.project2.cms.services.PostsService;
 import com.project2.cms.exception.ResourceNotFoundException;
@@ -215,16 +214,20 @@ if((Integer)session.getAttribute("writerpermission") == 2
          throws ResourceNotFoundException {
     	if (session.getAttribute("isLoggedIn") != null
     	        && (Boolean) session.getAttribute("isLoggedIn")) {
-    		if((Integer)session.getAttribute("writerpermission") != 2) {
-    			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    		Posts post = postRepository.findById(postId)
+    			       .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :: " + postId));
+    		Integer key = post.getAuthor();
+    		if((Integer)session.getAttribute("writerpermission") == 2 ||
+    				(Integer)session.getAttribute("writerid") == key) {
+    			
+    			postRepository.delete(post);
+    	        Map<String, Boolean> response = new HashMap<>();
+    	        response.put("deleted", Boolean.TRUE);
+    	        return response;
+    			}else {
+    				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     			}
-    	Posts post = postRepository.findById(postId)
-       .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :: " + postId));
-
-    	postRepository.delete(post);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
+    	
         
     	}else{
     	      throw new ResponseStatusException(HttpStatus.FORBIDDEN);
