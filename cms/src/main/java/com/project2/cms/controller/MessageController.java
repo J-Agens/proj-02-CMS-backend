@@ -2,6 +2,8 @@ package com.project2.cms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 // import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,6 +69,13 @@ public class MessageController {
       System.out.println("Failed to create new message : " + e);
       throw e;
     }
+  }
+  
+  @PatchMapping("/{id}")
+  public Message updateMessageWithId(@PathVariable Integer id) {
+    Message oldmsg = messageService.getMessageById(id);
+    Message newmsg = new Message(oldmsg.getId(), oldmsg.getSender(), oldmsg.getMessageText(), "read", oldmsg.getInbox());
+    return messageService.update(newmsg);
   }
 
 }
