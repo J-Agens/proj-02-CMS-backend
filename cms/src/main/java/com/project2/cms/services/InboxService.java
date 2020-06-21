@@ -33,4 +33,10 @@ public class InboxService {
     List<Inbox> inboxes = inboxRepository.grabInboxWithUserId(userId);
     return inboxes.get(0);
   }
+  
+  public Inbox create(Inbox inbox) {
+    inbox.setId(0);
+    return inboxRepository.save(inbox);
+  }
+  
 }

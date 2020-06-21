@@ -25,6 +25,7 @@ public class WriterService {
   }
   
   // Get writer from integer sent with a message
+  // Also used to create inbox
   public Writer getSenderOfMessage(Integer senderid) {
     Optional<Writer> ourWriter = writerRepository.findById(senderid);
     Writer finalWriter = ourWriter.get();
