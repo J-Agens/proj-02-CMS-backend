@@ -1,3 +1,4 @@
+package com.project2.cms;
 import com.sun.istack.NotNull;
 
 // Lombok @Data for a nice shortcut
