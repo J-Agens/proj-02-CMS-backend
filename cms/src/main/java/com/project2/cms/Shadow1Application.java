@@ -14,16 +14,16 @@ public class Shadow1Application {
 		SpringApplication.run(Shadow1Application.class, args);
 	}
 	
-	@Bean
-    public WebMvcConfigurer corsConfigurer() {
-      // We're defining the class we're using inline here as a shortcut
-      // You could create a separate file.
-      return new WebMvcConfigurer() {
-        public void addCorsMappings(CorsRegistry registry) {
-          registry.addMapping("/**").allowedMethods("*").allowCredentials(true).maxAge(3600);
-        }
-      };
-    }
+//	@Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//      // We're defining the class we're using inline here as a shortcut
+//      // You could create a separate file.
+//      return new WebMvcConfigurer() {
+//        public void addCorsMappings(CorsRegistry registry) {
+//          registry.addMapping("/**").allowedMethods("*").allowCredentials(true).maxAge(3600);
+//        }
+//      };
+//    }
 
 
 
