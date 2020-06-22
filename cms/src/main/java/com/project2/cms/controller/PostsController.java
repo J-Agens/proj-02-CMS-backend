@@ -1,6 +1,6 @@
 package com.project2.cms.controller;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -103,6 +103,7 @@ public class PostsController {
     	        && (Boolean) session.getAttribute("isLoggedIn")) {
     		
 Posts post = postRepository.findById(postId)
+    			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 Integer key = post.getAuthor(); 
 if((Integer)session.getAttribute("writerpermission") == 2
 		||
@@ -148,17 +149,12 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-    					Date date = new Date();
-//    					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//    					long time = System.currentTimeMillis();
-//    					java.sql.Date sqlDate = new java.sql.Date(time);
-    					
-//    					java.util.Date  = new Date();
-//    					java.sql.Date  = new java.sql.Date(myDate.getTime());
+//    					java.util.Date myDate = new Date();
+    					LocalDateTime sqlDate = LocalDateTime.now();
 
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(1);
-    			    	   post.setDatePublished(date);
+    			    	   post.setDatePublished(sqlDate.toString());
 
     			       //ends	       
     			       final Posts updatedPost = postRepository.save(post);
@@ -179,12 +175,12 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-    					Date date = new Date();
-//    					java.sql.Timestamp sqlDate = new java.sql.Date(time);
-    					
+//						java.util.Date myDate = new Date();
+    					LocalDateTime sqlDate = LocalDateTime.now();
+
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(0);
-    			    	   post.setDatePublished(date);
+    			    	   post.setDatePublished(sqlDate.toString());
     			       //ends	       
     			       final Posts updatedPost = postRepository.save(post);
     			        return ResponseEntity.ok(updatedPost);    			 	
