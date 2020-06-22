@@ -1,5 +1,10 @@
 package com.project2.cms.controller;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.project2.cms.model.Posts;
-import com.project2.cms.model.Writer;
 import com.project2.cms.repository.PostsRepository;
 import com.project2.cms.services.PostsService;
 import com.project2.cms.exception.ResourceNotFoundException;
@@ -149,12 +153,15 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-    					java.util.Date myDate = new Date();
-    					java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+//    					ZoneId zoneId = ZoneId.of ( "America/Montreal" );
+//    					java.util.Date utilDate = new java.util.Date();
+//    					Instant instant = utilDate.toInstant();
+//    					ZonedDateTime zdt = ZonedDateTime.ofInstant ( instant , zoneId );
+//    					LocalDate localDate = zdt.toLocalDate();
 
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(1);
-    			    	   post.setDatePublished(sqlDate);
+//    			    	   post.setDatePublished(localDate);
 
     			       //ends	       
     			       final Posts updatedPost = postRepository.save(post);
@@ -175,12 +182,15 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-						java.util.Date myDate = new Date();
-    					java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+//						ZoneId zoneId = ZoneId.of ( "America/NewYork" );
+//    					java.util.Date utilDate = new java.util.Date();
+//    					Instant instant = utilDate.toInstant();
+//    					ZonedDateTime zdt = ZonedDateTime.ofInstant ( instant , zoneId );
+//    					LocalDate localDate = zdt.toLocalDate();
 
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(0);
-    			    	   post.setDatePublished(sqlDate);
+//    			    	   post.setDatePublished(localDate);
     			       //ends	       
     			       final Posts updatedPost = postRepository.save(post);
     			        return ResponseEntity.ok(updatedPost);    			 	
@@ -215,16 +225,20 @@ if((Integer)session.getAttribute("writerpermission") == 2
          throws ResourceNotFoundException {
     	if (session.getAttribute("isLoggedIn") != null
     	        && (Boolean) session.getAttribute("isLoggedIn")) {
-    		if((Integer)session.getAttribute("writerpermission") != 2) {
-    			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    		Posts post = postRepository.findById(postId)
+    			       .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :: " + postId));
+    		Integer key = post.getAuthor();
+    		if((Integer)session.getAttribute("writerpermission") == 2 ||
+    				(Integer)session.getAttribute("writerid") == key) {
+    			
+    			postRepository.delete(post);
+    	        Map<String, Boolean> response = new HashMap<>();
+    	        response.put("deleted", Boolean.TRUE);
+    	        return response;
+    			}else {
+    				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     			}
-    	Posts post = postRepository.findById(postId)
-       .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :: " + postId));
-
-    	postRepository.delete(post);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
+    	
         
     	}else{
     	      throw new ResponseStatusException(HttpStatus.FORBIDDEN);
