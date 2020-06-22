@@ -153,15 +153,15 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-    					ZoneId zoneId = ZoneId.of ( "America/Montreal" );
-    					java.util.Date utilDate = new java.util.Date();
-    					Instant instant = utilDate.toInstant();
-    					ZonedDateTime zdt = ZonedDateTime.ofInstant ( instant , zoneId );
-    					LocalDate localDate = zdt.toLocalDate();
+//    					ZoneId zoneId = ZoneId.of ( "America/Montreal" );
+//    					java.util.Date utilDate = new java.util.Date();
+//    					Instant instant = utilDate.toInstant();
+//    					ZonedDateTime zdt = ZonedDateTime.ofInstant ( instant , zoneId );
+//    					LocalDate localDate = zdt.toLocalDate();
 
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(1);
-    			    	   post.setDatePublished(localDate);
+//    			    	   post.setDatePublished(localDate);
 
     			       //ends	       
     			       final Posts updatedPost = postRepository.save(post);
@@ -182,15 +182,15 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-						ZoneId zoneId = ZoneId.of ( "America/NewYork" );
-    					java.util.Date utilDate = new java.util.Date();
-    					Instant instant = utilDate.toInstant();
-    					ZonedDateTime zdt = ZonedDateTime.ofInstant ( instant , zoneId );
-    					LocalDate localDate = zdt.toLocalDate();
+//						ZoneId zoneId = ZoneId.of ( "America/NewYork" );
+//    					java.util.Date utilDate = new java.util.Date();
+//    					Instant instant = utilDate.toInstant();
+//    					ZonedDateTime zdt = ZonedDateTime.ofInstant ( instant , zoneId );
+//    					LocalDate localDate = zdt.toLocalDate();
 
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(0);
-    			    	   post.setDatePublished(localDate);
+//    			    	   post.setDatePublished(localDate);
     			       //ends	       
     			       final Posts updatedPost = postRepository.save(post);
     			        return ResponseEntity.ok(updatedPost);    			 	
