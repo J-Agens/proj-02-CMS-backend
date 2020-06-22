@@ -17,4 +17,4 @@ CMD ["java", "-jar", "appcat.jar"]
 # Finally, we use EXPOSE to suggest a port to open on the machine running this container.
 # Since our Docker containers are like VMs and have their own OS, they have their own ports.
 # If we want the outside world to be able to access our Docker containers, we need to expose their ports
-EXPOSE 8081/tcp
+EXPOSE 5001/tcp
