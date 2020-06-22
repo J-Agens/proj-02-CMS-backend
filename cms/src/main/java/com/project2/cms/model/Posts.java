@@ -3,6 +3,9 @@ package com.project2.cms.model;
 
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,9 +34,9 @@ public class Posts {
 	  @Column(name = "posttext")
 	private String postText;
 	  @Column(name = "datesubmitted")
-	private String dateSubmitted;
+	private LocalDate dateSubmitted;
 	  @Column(name = "datepublished")
-	private String datePublished;
+	private LocalDate datePublished;
 	  @Column(name = "posttype")
 	private String postType;
 	  @Column(name = "postfield")
@@ -50,7 +53,7 @@ public class Posts {
 	public Posts() {}
 	
 	public Posts(Integer postId, Integer author, String postTitle, String postDescription, String postText,
-			String dateSubmitted, String datePublished, String postType, String postField, String keyWords,
+			LocalDate dateSubmitted, LocalDate datePublished, String postType, String postField, String keyWords,
 			Integer resolver, String status, Integer published) {
 		super();
 		this.postId = postId;
@@ -108,19 +111,19 @@ public class Posts {
 		this.postText = postText;
 	}
 
-	public String getDateSubmitted() {
+	public LocalDate getDateSubmitted() {
 		return dateSubmitted;
 	}
 
-	public void setDateSubmitted(String dateSubmitted) {
+	public void setDateSubmitted(LocalDate dateSubmitted) {
 		this.dateSubmitted = dateSubmitted;
 	}
 
-	public String getDatePublished() {
+	public LocalDate getDatePublished() {
 		return datePublished;
 	}
 
-	public void setDatePublished(String datePublished) {
+	public void setDatePublished(LocalDate datePublished) {
 		this.datePublished = datePublished;
 	}
 
