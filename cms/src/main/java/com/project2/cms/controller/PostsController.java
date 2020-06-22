@@ -1,5 +1,6 @@
 package com.project2.cms.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -147,16 +148,17 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-    					
-    					long time = System.currentTimeMillis();
-    					java.sql.Date sqlDate = new java.sql.Date(time);
+    					Date date = new Date();
+//    					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//    					long time = System.currentTimeMillis();
+//    					java.sql.Date sqlDate = new java.sql.Date(time);
     					
 //    					java.util.Date  = new Date();
 //    					java.sql.Date  = new java.sql.Date(myDate.getTime());
 
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(1);
-    			    	   post.setDatePublished(sqlDate);
+    			    	   post.setDatePublished(date);
 
     			       //ends	       
     			       final Posts updatedPost = postRepository.save(post);
@@ -177,12 +179,12 @@ if((Integer)session.getAttribute("writerpermission") == 2
     					Posts post = postRepository.findById(postId)
     			        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 					  //data
-    					long time = System.currentTimeMillis();
-    					java.sql.Date sqlDate = new java.sql.Date(time);
+    					Date date = new Date();
+//    					java.sql.Timestamp sqlDate = new java.sql.Date(time);
     					
     			    	   post.setResolver((Integer)session.getAttribute("writerid"));
     			    	   post.setPublished(0);
-    			    	   post.setDatePublished(sqlDate);
+    			    	   post.setDatePublished(date);
     			       //ends	       
     			       final Posts updatedPost = postRepository.save(post);
     			        return ResponseEntity.ok(updatedPost);    			 	
